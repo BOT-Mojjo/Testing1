@@ -1,0 +1,6 @@
+Empty|false|0|0
+plasma Rifle|false|1d6|10
+
+
+
+//Name|Is it Magic?|Base Damage|Cost

@@ -1,0 +1,10 @@
+Bite|1d2
+Flee|0
+Dagger|1d4
+Sword|1d6
+Long Sword|2d4
+
+
+
+
+//Line Number is the Action id

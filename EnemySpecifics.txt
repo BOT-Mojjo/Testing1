@@ -1,0 +1,7 @@
+Cave Goblin|10|5|5|1|2|3
+   Bunny   |5|2|1|1|2
+
+
+
+
+//Name|Hp|Ac|xp given|actionN|actionN+1|actionN+2|etc
