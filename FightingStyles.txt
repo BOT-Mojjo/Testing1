@@ -1,0 +1,5 @@
+None|0,0
+Self-Taught|4,4|8,8|12,12
+Guardsman-Trained|5,5|10,10|15,15
+Rouge-Training|8,2|16,4|24,6
+Knights-Apprentice|2,8|4,16|6,24

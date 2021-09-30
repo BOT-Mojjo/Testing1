@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+
 int hadEnough = 0;
 bool inFight = false;
 string enemyName; // Names should always be 11 Characters long, no exceptions even if you have to just fill them with spaces.
@@ -9,18 +10,42 @@ int playerHealth = 10;
 int maxEnemyHealth;
 string enemyAction;
 Random gen = new Random();
+
+//attacks setup:
+
 int[] equipedAttacks = new int[4]; // Current attacks the player has equiped
-equipedAttacks[0]=1;
-equipedAttacks[1]=0;
+equipedAttacks[0]=1;    //1=starting weapon
+equipedAttacks[1]=0;    //0=empty
 equipedAttacks[2]=0;
 equipedAttacks[3]=0;
 string[] equipmentDbString = File.ReadAllLines(@"Equipment.txt"); //loading ALL Equipment data into a variable
-  
+
+//fighting styles setup:
+
+string[] fightingStylesDBString = File.ReadAllLines(@"FightingStyles.txt");  //all fighting styles
+string[,] fightingStylesLearned = new string[4, 2];   //current learned fighting style
+for(int i=0;i<8;i++){                                                         //filling all spots in the string to prevent NULL exceptions
+    string[] fightingStylesTemp = fightingStylesDBString[0].Split("|");       //making the db string usable temporarily,
+    //fightingStylesLearned[i/2,i%2]=fightingStylesDBString[0];            
+    if(i%2==0){
+        fightingStylesLearned[i/2,i%2]=fightingStylesTemp[0];
+    } else {
+        fightingStylesLearned[i/2,i%2]="0";
+    }
+    if(i==7){                                        //Equiping the starter fighting style, manually and hardcoded
+        fightingStylesLearned[0,0]="Self-Taught";    //First Column stores the name of the style
+        fightingStylesLearned[0,1]="3";              //Seconf column stores the level of the style
+    }
+}
+int[] fightingStyle = new int[2];  //currently equiped fighting style, with what it doues math wise 
+fightingStyle[0] = 4;              //[0]=+atk%
+fightingStyle[1] = 4;              //[1]=+def%
+figthingSytlesMeny();
 Start:
 Console.WriteLine("RPG adventure of the CMD");
 Console.WriteLine("  Write Start to Begin");
 Console.WriteLine();
-Console.WriteLine("Write Rules to learn how to play");
+//Console.WriteLine("Write Rules to learn how to play");
 
 Choices:
 string WhatPlayerDid = Console.ReadLine(); //lets the player choose between starting,
@@ -75,7 +100,6 @@ while(inFight==true){
     string[] enemyDbString = File.ReadAllLines(@"EnemySpecifics.txt");  //getting all of the enemy data into a variable 
     string[] currentEnemy = enemyDbString[1].Split('|');    //Splitting the data for the current enemy 
                                                             //into usable chunks
-    
 
     enemyHealth = int.Parse(currentEnemy[1]);               
     maxEnemyHealth = enemyHealth;
@@ -116,6 +140,11 @@ while(inFight==true){
             attackMeny();
             actionAttack();
             break;
+
+            case 2:
+
+            break;
+
         }
     }
     if(enemyHealth==0){
@@ -146,7 +175,7 @@ while(inFight==true){
 }
 
 
-void attackMeny(){    //Gör menyn som visar vad man kan attakera med
+void attackMeny(){                                                                       //Gör menyn som visar vad man kan attakera med
         Console.Clear();
         Console.WriteLine("+-----------------------+");
         Console.WriteLine("|   -Equiped Attacks-   |");
@@ -154,8 +183,8 @@ void attackMeny(){    //Gör menyn som visar vad man kan attakera med
         for(int menyLine = 0; menyLine != equipedAttacks.Length; menyLine++){
             string[] tempEquip = equipmentDbString[equipedAttacks[menyLine]].Split('|'); //tar alla equiped attacker och gör dem användbara
             string lineFiller= "                    ";
-            lineFiller = lineFiller.Substring(0, 20-tempEquip[0].Length); //checks lenght of equipment name
-            Console.WriteLine("| "+(menyLine+1)+":"+tempEquip[0]+lineFiller+"|");// loads the name of the equipment from the DBstring with the id from equipedattacks string
+            lineFiller = lineFiller.Substring(0, 20-tempEquip[0].Length);                //checks lenght of equipment name
+            Console.WriteLine("| "+(menyLine+1)+":"+tempEquip[0]+lineFiller+"|");        // loads the name of the equipment from the DBstring with the id from equipedattacks string
         }
         Console.WriteLine("|                       |");
         Console.WriteLine("+-----------------------+");
@@ -174,6 +203,35 @@ int StrToInt(string text){
     }
 }
 
+
+void figthingSytlesMeny(){                    //Gör menyn som visar vad man den innehåller --kan attakera med--
+    int useless;
+    for(int i=0; i<4; i++){
+        string TempStyleLvl = "";
+        for(int i2=0; i2<int.Parse(fightingStylesLearned[i,1]); i2++){
+            TempStyleLvl.Insert(TempStyleLvl.Length,"I");
+        }
+        fightingStylesLearned[i,0].Insert(fightingStylesLearned[i,0].Length," "+TempStyleLvl);  //Adds the lvl values to the end of the name temporarily for the purpose of the meny
+    }
+    
+    Console.Clear();
+    Console.WriteLine("+-----------------------+");
+    Console.WriteLine("|   -Fighting Styles-   |");
+    Console.WriteLine("|                       |");
+    //for(int menyLine = 0; menyLine != fightingStylesLearned.Length-1; menyLine++){
+        //string[] tempEquip = DBString[idString[menyLine]].Split('|');                //tar alla equiped attacker och gör dem användbara
+    foreach(string menyLine in fightingStylesLearned){
+        if(int.TryParse(menyLine,out useless)==false){
+        int i=1;
+        string lineFiller= "                    ";
+        lineFiller = lineFiller.Substring(0, 20-menyLine.Length);                //checks lenght of equipment name
+        Console.WriteLine("| "+i+":"+menyLine+lineFiller+"|");        // loads the name of the equipment from the DBstring with the id from equipedattacks string
+        i++;
+        }
+    }
+    Console.WriteLine("|                       |");
+    Console.WriteLine("+-----------------------+");
+}
 
 
 
