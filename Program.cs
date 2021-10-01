@@ -25,13 +25,13 @@ string[] equipmentDbString = File.ReadAllLines(@"Equipment.txt"); //loading ALL 
 string[] fightingStylesDBString = File.ReadAllLines(@"FightingStyles.txt");  //all fighting styles
 string[,] fightingStylesLearned = new string[4, 3];   //current learned fighting style
 for(int i=0;i<8;i++){                                                         //filling all spots in the string to prevent NULL exceptions
-    string[] fightingStylesTemp = fightingStylesDBString[0].Split("|");       //making the db string usable temporarily,
+    string[] fightingStylesTemp = fightingStylesDBString[3].Split("|");       //making the db string usable temporarily,
     //fightingStylesLearned[i/2,i%2]=fightingStylesDBString[0];            
     if(i%2==0){
         fightingStylesLearned[i/2,i%2]=fightingStylesTemp[0];  //fills in the name
-        fightingStylesLearned[i/2,2]="1";                      //fills in the id, 1 for "none" in this case
+        fightingStylesLearned[i/2,2]="3";                      //fills in the id, 1 for "none" in this case
     } else {
-        fightingStylesLearned[i/2,i%2]="0";                    //fills in the lvl for the Style, 1 for lvl 1
+        fightingStylesLearned[i/2,i%2]="2";                    //fills in the lvl for the Style, 1 for lvl 1
     }
     if(i==7){                                        //Equiping the starter fighting style, manually and hardcoded
         fightingStylesLearned[0,0]="Self-Taught";    //First Column stores the name of the style
@@ -257,10 +257,10 @@ void actionStyleChange(){
         
         string[] tempStyleData = fightingStylesDBString[int.Parse(fightingStylesLearned[styleChangedTo-1,2])].Split("|");    //DBstring[idnummer från Learned[vadman vill byta till, id nummer plats i array]]
         //ger data i ett {"namn","x1,y1","x2,y2","x3,y2"} format.
-        string tempStyleDatalevel = tempStyleData[int.Parse(fightingStylesLearned[styleChangedTo,2])];
-        int tempNum = tempStyleDatalevel.IndexOf(",")+1;
+        string tempStyleDatalevel = tempStyleData[int.Parse(fightingStylesLearned[styleChangedTo-1,1])];
+        int tempNum = tempStyleDatalevel.IndexOf(",");
         fightingStyle[0] = int.Parse(tempStyleDatalevel.Substring(0, tempStyleDatalevel.Length-tempNum));
-        fightingStyle[1] = int.Parse(tempStyleDatalevel.Substring(tempNum, tempStyleDatalevel.Length-tempNum));
+        fightingStyle[1] = int.Parse(tempStyleDatalevel.Substring(tempNum+1));
     
     }
 }

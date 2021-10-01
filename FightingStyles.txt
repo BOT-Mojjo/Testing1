@@ -1,5 +1,19 @@
 None|0,0
 Self-Taught|4,4|8,8|12,12
-Guardsman-Trained|5,5|10,10|15,15
-Rouge-Training|8,2|16,4|24,6
-Knights-Apprentice|2,8|4,16|6,24
+Fighter-Trained|5,5|10,10|15,15
+Theifs-Lessons|8,2|16,4|24,6
+Bulwark-Trainee|2,8|4,16|6,24
+
+Warrior-Approved|8,8|16,16|24,24
+Rogues-Training|13,3|26,6|36,12
+Knights-Apprentice|3,13|6,26|12,36
+
+Champions-Spirit|13,13||26,26|39,39
+Assassins-Practice|21,5|42,10|63,15
+Paladins-Guidence|5,21|10,42|15,63
+
+//3.5 tiers of styles
+//start : Self-taught + none
+//Beginnig : fighter, theif, and bulwark
+//Middle : Warrior, Rogue, and Knight
+//End : Champion, Assassin, and Paladin
