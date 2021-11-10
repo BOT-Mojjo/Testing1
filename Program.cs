@@ -11,10 +11,8 @@ int playerHealth = 10;
 int maxEnemyHealth;
 string enemyAction;
 
-
-
 InventoryLists.inventorySetup();
-
+Inventory.actionWeaponsInventory();
 
 /*string[] weaponSetup = equipmentDbString[1].Split("|");
 string[,] weaponList = new string[10,6];                          //Name, what weaponclass is currently it
