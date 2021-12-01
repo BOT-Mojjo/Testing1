@@ -88,7 +88,7 @@ public class Inventory{
                     answer = Console.ReadLine().ToLower();
                     if(answer == "y" || answer == "yes"){
                         goto wepInv;
-                    } else if (answer == "n" || answer == "no"){
+                    } else {
                         goto wepChg;
                     }
                 }else{
@@ -111,7 +111,7 @@ public class Inventory{
                         answer = Console.ReadLine().ToLower();
                         if(answer == "y" || answer == "yes"){
                             goto wepInv;
-                        } else if (answer == "n" || answer == "no"){
+                        } else {
                             Console.Clear();
                             goto wepChg;
                         }
@@ -128,10 +128,18 @@ public class Inventory{
                 answer = Console.ReadLine().ToLower();
                 if(answer == "y" || answer == "yes"){
                     ongoing = false;
-                } else if (answer == "n" || answer == "no"){
+                } else {
                     goto wepInv;
-                }              
+                }          
             }
+        }
+    }
+
+    static public void actionArmourInventory(){
+        if(Fight.ongoing==true){
+            Console.WriteLine();
+            Console.WriteLine("You're in a fight, trying to change armour could be fatal.");
+            Console.ReadLine();
         }
     }
 }
