@@ -2,6 +2,9 @@
 //since i would've needed one anyway to keep track of each class type, and what objects existed.
 //or maybe not.
 
+//Update, i can create a list that works as a database, but currently i have to create a method for each type of
+//variable in each class. it will work, but it's tedius.
+
 //Consumables
 class healingItem{
     public string name;
@@ -9,19 +12,29 @@ class healingItem{
     public int cost;
 }
 
+class manaItem{
+    public string name;
+    public int manaReplenished;
+    public int cost;
+}
+
 class buffItem{
     public string name;
-    public int[] effect = new int[2];
+    public int atkEffect;
+    public int defEffect;
     public int cost;
 }
 
 //Armour
-class armour{
+class Armour{
     public string name;
     public int AC;
     public int dodge;
     public int def;
+    public int repairCost;
     public int cost;
+    public int durability;
+    public int repairCostModifier;
 }
 
 //Weaponry
@@ -54,5 +67,12 @@ class utilitySpell{
 
 //player
 class player{
+    static public string name;
+    static public int maxHealth;
+    static public int health;
+    static public int maxMana;
+    static public int mana;
+    static public int atkBuff;
+    static public int defBuff;
     static public int coins = valueConvert.genRandom.Next(5,15);
 }

@@ -1,0 +1,3 @@
+None|0|0|0|0|0|0|0|0
+Light Leathers|10|10|10|1|20|1
+//Name|AC|dodge%|Def%|RepairCost|Cost|Durability|repairCostModifier

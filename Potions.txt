@@ -1,0 +1,8 @@
+h|Empty|0|0
+h|Minor Healing|7|5
+m|Minor Mana|10|5
+b|Minor Damage+|0|5|5
+b|Minor Defense+|5|0|5
+/healing|Name|HealedAmount|Cost
+/mana|Name|ManaReplenished|Cost
+/buff|Name|Effect[+def%|+atk%]|Cost

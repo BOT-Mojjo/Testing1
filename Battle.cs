@@ -6,7 +6,6 @@ public class Fight{
         while (ongoing == true){
             string enemyName; // Names should always be 11 Characters long, no exceptions even if you have to just fill them with spaces.
             int enemyHealth;
-            int playerHealth = 10;
             int maxEnemyHealth;
             string enemyAction;
             int enemy = valueConvert.genRandom.Next(0, 1);
@@ -37,7 +36,7 @@ public class Fight{
                 }
                 Console.WriteLine("+------------------------+");
                 //                 |     Player    10hp      |
-                Console.WriteLine($"|     Player    {playerHealth}hp      |");
+                Console.WriteLine($"|     Player    {player.health}hp      |");
                 Console.WriteLine("|  1:Attack   2:Style     |");
                 Console.WriteLine("|  3:Flee     4:Inventory |");
                 Console.WriteLine("+-----------------------+");

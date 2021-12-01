@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-
+Fight.ongoing=false;
 int hadEnough = 0;
 string playerName;
+
 
 InventoryLists.inventorySetup();
 FightingStyles.fightingStyleSetup();
@@ -53,16 +54,16 @@ if (WhatPlayerDid == "start"){              //checking how the game works,
 StartOfAdventure:
 Console.Clear();
 Console.WriteLine("What is your name Adventurer?");
-playerName = Console.ReadLine();
+player.name = Console.ReadLine();
 Console.WriteLine();
-while(playerName.Length>15){
+while(player.name.Length>15){
     Console.WriteLine("Would you happen to have a shorter nickname?");
     Console.WriteLine();
     playerName=Console.ReadLine();
 }
 
-
-Console.WriteLine("I see. Good luck on your Journey, " + playerName + ".");
+//tutorial
+Console.WriteLine("I see. Good luck on your Journey, " + player.name + ".");
 Console.ReadLine();
 Console.Clear();
 Console.WriteLine("As you set out on your Journey, your first steps lead you to The Peaceful Plains");
