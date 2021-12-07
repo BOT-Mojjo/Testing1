@@ -52,27 +52,49 @@ class MeleeWeapon{
 class offensiveSpell{
     public string name;
     public int dmg;
+    public bool aoe;
     public int manaCost;
     public int cost;
 }
 
 class utilitySpell{
     public string name;
-    public int[] Modifiers = new int[3]; //AtkModifier[0], DefModifier[1], AcModifier[2]
-    /*public int atkModifier;
-    public int AcModifier;*/
+    public int atkModifier;
+    public int defModifier;
+    public int acModifier;
+    public int healing;
+    public int duration;
     public int manaCost;
+    public int cost;
+}
+//MiscInventory
+class misc{
+    public string whatItIs;
+    public string name;
+    public string description;
     public int cost;
 }
 
 //player
 class player{
-    static public string name;
-    static public int maxHealth;
-    static public int health;
-    static public int maxMana;
-    static public int mana;
-    static public int atkBuff;
-    static public int defBuff;
-    static public int coins = valueConvert.genRandom.Next(5,15);
+    public static string name;
+    public static int maxHealth;
+    public static int health;
+    public static int maxMana;
+    public static int mana;
+    public static int atkBuff;
+    public static int defBuff;
+    public static int coins = valueConvert.genRandom.Next(5,15);
+}
+
+//enemies
+class enemy{
+    public string name;
+    public int maxHealth;
+    public int health;
+    public int maxMana;
+    public int mana;
+    public int atkBuff;
+    public int defBuff;
+    public int itemsDropped;
 }

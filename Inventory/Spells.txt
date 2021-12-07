@@ -1,0 +1,7 @@
+o|Empty|0|false|0|0
+o|Fire Bolt|10|true|5|20
+u|Shield|0|50|8|0|1|10|25
+u|Minor Healing|0|10|0|10|1|15|30
+u|Minor Strenght|15|0|0|0|5|15|25
+/offensiveSpell|Name|Damage|AreaOfEffect|ManaCost|Cost
+/utilitySpell|Name|AtkModifier|DefModifier|AcModifier|Healing|Duration|ManaCost|Cost

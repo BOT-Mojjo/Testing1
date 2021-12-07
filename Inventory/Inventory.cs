@@ -30,6 +30,12 @@ public class Inventory{
                 case 3:
                     actionPotionsInventory();
                     break;
+                case 4:
+                    actionMiscellaneousInv();
+                    break;
+                case 5:
+                    actionSpellInventory();
+                    break;
             } 
         }
     }
@@ -43,7 +49,7 @@ public class Inventory{
         Console.WriteLine("|        --==Inventory==--        |");
         Console.WriteLine("|     1:Weapons     2:Armour      |");
         Console.WriteLine("|   3:Potions  4:Miscellaneous    |");
-        Console.WriteLine("|   5:Magicks      Coins: " + tempCoins + "    |");
+        Console.WriteLine("|    5:Spells     Coins: " + tempCoins + "     |");
         Console.WriteLine("+------------=========------------+");
         Console.WriteLine();
             }
@@ -199,8 +205,8 @@ public class Inventory{
             Console.WriteLine("|        --=Potion Belt=--        |");
             for(int i = 0; i < 7; i++){
                 string linefiller = "                                 ";
-                linefiller = linefiller.Substring(0, 17 - InventoryLists.FetchPotionName(i,InventoryLists.potionInventory[i,1]).Length);
-                Console.WriteLine($"| Potion slot {i+1}: {InventoryLists.FetchPotionName(i,InventoryLists.potionInventory[i,1])}{linefiller}|");
+                linefiller = linefiller.Substring(0, 17 - InventoryLists.FetchPotionName(i).Length);
+                Console.WriteLine($"| Potion slot {i+1}: {InventoryLists.FetchPotionName(i)}{linefiller}|");
             }
             Console.WriteLine("+------------=========------------+");
             Console.WriteLine("   'Move' to move potions around");
@@ -215,8 +221,8 @@ public class Inventory{
                 Console.WriteLine("|        --=Potion Belt=--        |");
                 for(int i = 0; i < 7; i++){
                     string linefiller = "                                 ";
-                    linefiller = linefiller.Substring(0, 17 - InventoryLists.FetchPotionName(i,InventoryLists.potionInventory[i,1]).Length);
-                    Console.WriteLine($"| Potion slot {i+1}: {InventoryLists.FetchPotionName(i,InventoryLists.potionInventory[i,1])}{linefiller}|");
+                    linefiller = linefiller.Substring(0, 17 - InventoryLists.FetchPotionName(i).Length);
+                    Console.WriteLine($"| Potion slot {i+1}: {InventoryLists.FetchPotionName(i)}{linefiller}|");
                 }
                 Console.WriteLine("+------------=========------------+");
                 Console.WriteLine();
@@ -247,8 +253,8 @@ public class Inventory{
                     Console.WriteLine("|  --=What potion do you Use?=--  |");
                     for(int i = 0; i < 7; i++){
                         string linefiller = "                                 ";
-                        linefiller = linefiller.Substring(0, 17 - InventoryLists.FetchPotionName(i,InventoryLists.potionInventory[i,1]).Length);
-                        Console.WriteLine($"| Potion slot {i+1}: {InventoryLists.FetchPotionName(i,InventoryLists.potionInventory[i,1])}{linefiller}|");
+                        linefiller = linefiller.Substring(0, 17 - InventoryLists.FetchPotionName(i).Length);
+                        Console.WriteLine($"| Potion slot {i+1}: {InventoryLists.FetchPotionName(i)}{linefiller}|");
                     }
                     Console.WriteLine("+------------=========------------+");
                     Console.WriteLine();
@@ -256,7 +262,7 @@ public class Inventory{
                     int potionUsed = valueConvert.StrToInt(Console.ReadLine());
                     if(potionUsed>0 && potionUsed<8){  //a potion is used
                         potionUsed--; //nudges the variable so it lines up with the array, since it starts at 0 and the meny at 1.
-                        if(InventoryLists.FetchPotionName(potionUsed,InventoryLists.potionInventory[potionUsed,1])=="Empty"){
+                        if(InventoryLists.FetchPotionName(potionUsed)=="Empty"){
                             Console.WriteLine("That vial is empty.");
                             Console.ReadLine();
                         } else {
@@ -287,13 +293,11 @@ public class Inventory{
                                     player.defBuff = player.defBuff+temp3[1];
                                     Console.WriteLine("You feel strength surge through you.");
                                     break;
-                                default:   //Only fires if there is a potion with a type outside of the Health/Mana/Buff Trifecta, and the array doesn't spit out a failure
-                                    Console.WriteLine("  Error: Potion type Corrupted/Manipulated.");  //Honsetly this is just a failsafe and i don't see how this could ever occur
-                                    Console.WriteLine("          Potion has been removed.");
-                                    Console.WriteLine();
-                                    Console.WriteLine("Some enteties in this game are really fragile.");
-                                    Console.WriteLine("Therefore when modifying the game files please");
-                                    Console.WriteLine("                  be careful.");
+                                default:   
+                                    //Only fires if there is a potion with a type outside of the Health/Mana/Buff Trifecta, and the array doesn't spit out a failure
+                                    //honsetly never expect this to work since the file data list will throw an out of array exeption and crash
+                                    Console.WriteLine("potions are malfunctioning?");
+                                    Console.WriteLine("what did you even do?");
                                     break;
                             }
                             InventoryLists.potionInventory[potionUsed,0] = 0;  //Removes the potion from the inventory
@@ -322,6 +326,205 @@ public class Inventory{
             }
         }
     }
+
+
+    static void actionSpellInventory(){
+        bool ongoing = true;
+        while(ongoing==true){
+            Console.Clear();
+            Console.WriteLine("+------------=========------------+");
+            Console.WriteLine("|     --=Spells Inventory=--      |");
+            Console.WriteLine("|        -Readied Spells-         |");
+            for(int i = 0; i < 2; i++){
+                string linefiller = "                                 ";
+                linefiller = linefiller.Substring(0, 18 - InventoryLists.FetchSpellName(i).Length);
+                Console.WriteLine($"| Spell slot {i+1}: {InventoryLists.FetchSpellName(i)}{linefiller}|");
+            }
+            Console.WriteLine("|     -----------------------     |");
+            Console.WriteLine("|         -Known Spells-          |");
+            for(int i = 0; i < 5; i++){
+                string linefiller = "                                 ";
+                linefiller = linefiller.Substring(0, 18 - InventoryLists.FetchSpellName(i+2).Length);  //Changes the linefiller so that the window 
+                Console.WriteLine($"| Spell slot {i+1}: {InventoryLists.FetchSpellName(i+2)}{linefiller}|"); // is the correct witdth, like i did with FightingStyles
+            }
+            Console.WriteLine("+------------=========------------+");
+            Console.WriteLine("");
+            Console.WriteLine("     Change readied spell? y/n");
+            answer=Console.ReadLine().ToLower();
+            if(answer == "y" || answer =="yes"){  
+                if(acted == true && Fight.ongoing == true){
+                    Console.Clear();
+                    Console.WriteLine("You've already used the inventory this turn.");
+                    Console.WriteLine("         Your time is running out.");
+                    Console.ReadLine();
+                } else { 
+                    bool ongoing1 = true;
+                     while(ongoing1){
+                        int[] temp = new int[4];       //Used to know what weapon slot is gonna change
+                        Console.Clear();    //Let's you change equipped weapon
+                        Console.WriteLine("+------------=========------------+");       // during the change since i'll be 
+                        Console.WriteLine("|        -=Redied Spells=-        |");       // overwriting the old one
+                        for(int i = 0; i < 2; i++){
+                            string linefiller = "                                 ";        //Change window lenght to something bigger
+                            linefiller = linefiller.Substring(0, 18 - InventoryLists.FetchSpellName(i).Length);
+                            Console.WriteLine($"| Spell slot {i+1}: {InventoryLists.FetchSpellName(i)}{linefiller}|");
+                        }
+                        Console.WriteLine("+------------=========------------+");
+                        Console.WriteLine();
+                        Console.WriteLine(" What spell do you want to change?");
+                        Console.WriteLine();
+                        temp[0] = valueConvert.StrToInt(Console.ReadLine())-1;               // Input from user, what weapon slot to change
+                        if(temp[0] !=0 && temp[0] !=1){                    
+                            Console.WriteLine("Go back? y/n");
+                            answer = Console.ReadLine().ToLower();
+                            if(answer == "y" || answer == "yes"){
+                                ongoing1 = false;
+                            }
+                        }else{
+                            Console.WriteLine("+------------=========------------+");       //Choosig what weapon to switch to.
+                            Console.WriteLine("|         -=Known Spells=-        |");       
+                            for(int i = 0; i < 5; i++){
+                                string linefiller = "                                 ";        
+                                linefiller = linefiller.Substring(0, 18 - InventoryLists.FetchSpellName(i+2).Length);
+                                Console.WriteLine($"| Spell slot {i+1}: {InventoryLists.FetchSpellName(i+2)}{linefiller}|");
+                            }
+                            Console.WriteLine("+------------=========------------+");
+                            Console.WriteLine();
+                            Console.WriteLine("     What Spell do you want to");
+                            Console.WriteLine("            switch to?");
+                            Console.WriteLine();
+                            temp[1] = valueConvert.StrToInt(Console.ReadLine());
+                            if(temp[1] == 1 || temp[1] > 5){
+                                Console.WriteLine("Go back? y/n");
+                                answer = Console.ReadLine().ToLower();
+                                if(answer == "y" || answer == "yes"){
+                                    ongoing1 = false;
+                                }
+                            } else {
+                                temp[1]++;
+                                temp[2]=InventoryLists.spellInventory[temp[0],0];  //puts pot 1 into temp storage
+                                temp[3]=InventoryLists.spellInventory[temp[0],1];
+                                InventoryLists.spellInventory[temp[0],0] = InventoryLists.spellInventory[temp[1],0]; //moves pot 2 into pot 1s old place
+                                InventoryLists.spellInventory[temp[0],1] = InventoryLists.spellInventory[temp[1],1];
+                                InventoryLists.spellInventory[temp[1],0] = temp[2];  // moves pot 1 from storage int pot 2s old place
+                                InventoryLists.spellInventory[temp[1],1] = temp[3];
+                                ongoing1=false;
+                                acted=true;
+                            }
+                        }
+                    }
+                }
+            } else {
+                Console.WriteLine("Go back? y/n");
+                answer = Console.ReadLine().ToLower();
+                if(answer == "y" || answer == "yes"){
+                    ongoing = false;
+                }
+            }
+        }
+    }
+
+    static void actionMiscellaneousInv(){
+        bool ongoing = true;
+        int page=0;                                                             //Keeps track of what page you're on
+        int pageTotal=(InventoryLists.miscInventory.Count/10);                  //Keeps track of how many pages your inventory has
+        while (ongoing){
+            Console.Clear();
+            Console.WriteLine("+------------=========------------+");
+            Console.WriteLine("|  --=Miscellaneous Inventory=--  |");
+            if(InventoryLists.miscInventory.Count == 0){
+                Console.WriteLine("|            -=Empty=-            |");
+            } else {
+                if(InventoryLists.miscInventory.Count<10){
+                    for(int i = 0; i < InventoryLists.miscInventory.Count; i++){
+                        string linefiller = "                                 ";        
+                        linefiller = linefiller.Substring(0, 20 - InventoryLists.FetchMiscName(i).Length);
+                        Console.WriteLine($"| Inv slot {i+1}: {InventoryLists.FetchMiscName(i)}{linefiller}|");
+                    }
+                } else {
+                    if(page<pageTotal){                                           //If it isn't the last page
+                        for(int i = 0; i < 10; i++){
+                            string linefiller = "                                 ";
+                            if(i+1+(page*10)<10){
+                                linefiller = linefiller.Substring(0, 20 - InventoryLists.FetchMiscName(i+(page*10)).Length);
+                            } else {
+                                linefiller = linefiller.Substring(0, 19 - InventoryLists.FetchMiscName(i+(page*10)).Length);
+                            }
+                            Console.WriteLine($"| Inv slot {i+1+(page*10)}: {InventoryLists.FetchMiscName(i+(page*10))}{linefiller}|");
+                        }
+                    } else {
+                        for(int i = 0; i < InventoryLists.miscInventory.Count-(page*10)-1; i++){
+                            string linefiller = "                                 ";        
+                            linefiller = linefiller.Substring(0, 19 - InventoryLists.FetchMiscName(i+(page*10)).Length);
+                            Console.WriteLine($"| Inv slot {i+1+(page*10)}: {InventoryLists.FetchMiscName(i+(page*10))}{linefiller}|");
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("+------------=========------------+");
+            if(InventoryLists.miscInventory.Count == 0){
+                answer="0";
+            } else if(pageTotal>0){
+                Console.WriteLine("        Move between pages");
+                Console.WriteLine("       by typing '<' or '<'");
+                Console.WriteLine("        or Inspect an item");
+                answer=Console.ReadLine();
+            } else {    
+                Console.WriteLine("           Inspect item?");
+                answer=Console.ReadLine();
+            }
+            if(pageTotal>0 && (answer == "<" || answer == ">")){
+                if(answer == "<"){
+                    if(page==0){
+                        Console.WriteLine("You're on the first page.");
+                        Console.ReadKey();
+                    } else {
+                        page--;
+                    }
+                } else if(answer == ">"){
+                    if(page==pageTotal){
+                        Console.WriteLine("You're on the last page.");
+                        Console.ReadKey();
+                    } else {
+                        page++;
+                    }
+                }
+            } else if(valueConvert.StrToInt(answer)==0 || valueConvert.StrToInt(answer) > InventoryLists.miscInventory.Count+1){
+                Console.WriteLine("           Go back? y/n");
+                answer = Console.ReadLine().ToLower();
+                if(answer == "y" || answer == "yes"){
+                    ongoing = false;
+                }
+            } else {
+                Console.Clear();
+                Console.WriteLine("+------------=========------------+");
+                string linefiller = "                                 ";
+                string name = InventoryLists.FetchMiscName(valueConvert.StrToInt(answer)-1);
+                linefiller = linefiller.Substring(0, 27 - name.Length);
+                if(linefiller.Length % 2 == 1){
+                    linefiller = linefiller.Substring(0, linefiller.Length/2); //delar "linefiller på 2
+                    Console.WriteLine("|"+linefiller+"--="+name+"=--"+linefiller+" |"); // skriver "mellanrum ordsträk mellanrum
+                } else {
+                    linefiller = linefiller.Substring(0, linefiller.Length/2); // den andra biten finns ifall orden är jämna
+                    Console.WriteLine("|"+linefiller+"--="+name+"=--"+linefiller+"|");  // då skulle man behöva olika längd av mellanrum
+                }
+                string[] tempDescription = InventoryLists.FetchMiscDesc(valueConvert.StrToInt(answer)-1);
+                foreach(string line in tempDescription){
+                    linefiller = "                                 ";
+                    linefiller = linefiller.Substring(0, 33 - line.Length);
+                    if(linefiller.Length % 2 == 1){
+                        linefiller = linefiller.Substring(0, linefiller.Length/2); //delar "linefiller på 2
+                        Console.WriteLine("|"+linefiller+line+linefiller+" |"); // skriver "mellanrum ordsträk mellanrum
+                    } else {
+                        linefiller = linefiller.Substring(0, linefiller.Length/2); // den andra biten finns ifall orden är jämna
+                        Console.WriteLine("|"+linefiller+line+linefiller+"|");  // då skulle man behöva olika längd av mellanrum
+                    }
+                }
+                Console.WriteLine("+------------=========------------+");
+                Console.ReadLine();
+            }
+        }
+    }
 }
 
 public class InventoryLists{
@@ -335,17 +538,24 @@ public class InventoryLists{
     static List<healingItem> healingItem = new List<healingItem>();
     static List<manaItem> manaItem = new List<manaItem>();
     static List<buffItem> buffItem = new List<buffItem>();
+
+    static public int[,] spellInventory = new int[7,2];
+    static List<offensiveSpell> offensiveSpell = new List<offensiveSpell>();
+    static List<utilitySpell> utilitySpell = new List<utilitySpell>();
+
+    static public List<string> miscInventory = new List<string>();
+    static List<misc> miscItem = new List<misc>();
     
     static public string FetchWeaponName(int InventoryID){
         return weapons[weaponInventory[InventoryID]].name;
     }
     static public string FetchArmourName(int InventoryID){
-        return armour[armourInventory[InventoryID,0]].name;
+        return armour[armourInventory[InventoryID,0]].name;   //<List of data>[array of player inventory[what position item has in invenotry,if it's id or type]]
     }
-    static public string FetchPotionName(int InventoryID,int type){
-        switch(type){
+    static public string FetchPotionName(int InventoryID){
+        switch(potionInventory[InventoryID,1]){
             case 0:
-                return healingItem[potionInventory[InventoryID,0]].name;
+                return healingItem[potionInventory[InventoryID,0]].name;    //<List of data>[array of player inventory[what position item has in invenotry,if it's id or type]]
             case 1:
                 return manaItem[potionInventory[InventoryID,0]].name;
             case 2:
@@ -354,6 +564,27 @@ public class InventoryLists{
                 return "PotionName";
         }
     }
+    static public string FetchSpellName(int InventoryID){
+        if(spellInventory[InventoryID,1] == 0){
+            return offensiveSpell[spellInventory[InventoryID,0]].name; //<List of data>[array of player inventory[what position item has in invenotry,if it's id or type]]
+        } else {
+            return utilitySpell[spellInventory[InventoryID,0]].name;
+        }
+    }
+
+    static public string FetchMiscName(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return miscItem[int.Parse(temp[0])].name;
+    }
+    static public int FetchMiscAmount(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return int.Parse(temp[1]);
+    }
+    static public string[] FetchMiscDesc(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return miscItem[int.Parse(temp[0])].description.Split("#");
+    }
+
     static public int FetchHealpotAmount(int InventoryID){
         return healingItem[potionInventory[InventoryID,0]].healing;
     }
@@ -366,10 +597,28 @@ public class InventoryLists{
         temp[1] = buffItem[potionInventory[InventoryID,0]].defEffect;
         return temp;
     }
+    static public void AddMiscItem(int itemID, int itemCount){
+        int listID = 0;
+        bool exists = false;
+        foreach(string item in miscInventory){
+            string[] temp = item.Split("|");
+            if(itemID==int.Parse(temp[0])){
+                string newItem = $"{itemID}|{int.Parse(temp[1])+itemCount}";
+                miscInventory.RemoveAt(listID);
+                miscInventory.Add(newItem);
+                exists = true;
+                break;
+            }
+            listID++;
+        }
+        if (exists==false){
+            miscInventory.Add($"{itemID}|{itemCount}");
+        }
+    }
     static public void inventorySetup(){
         //Weaponry Setup
 
-        string[] equipmentDbString = File.ReadAllLines(@"Weaponry.txt"); //loading ALL Weapons data into a variable
+        string[] equipmentDbString = File.ReadAllLines(@"Inventory\Weaponry.txt"); //loading ALL Weapons data into a variable
         foreach (string line in equipmentDbString){
             if (!(line[0] == '/')){
                 string[] weaponData = line.Split('|');
@@ -378,6 +627,8 @@ public class InventoryLists{
                     name = weaponData[0],
                     dmg = int.Parse(weaponData[1]),
                     AcModifier = int.Parse(weaponData[2]),
+                    ManaCostReduction = int.Parse(weaponData[3]),
+                    SpellEffectModifier = int.Parse(weaponData[4]),
                     cost = int.Parse(weaponData[5])
 
                 });
@@ -386,7 +637,7 @@ public class InventoryLists{
         weaponInventory[0] = 1;
         //armour
 
-        equipmentDbString = File.ReadAllLines(@"Armour.txt"); //loading ALL of Armour data into a variable
+        equipmentDbString = File.ReadAllLines(@"Inventory\Armour.txt"); //loading ALL of Armour data into a variable
         foreach (string line in equipmentDbString){
             if (!(line[0] == '/')){
                 string[] data = line.Split('|');
@@ -396,7 +647,10 @@ public class InventoryLists{
                     AC = int.Parse(data[1]),
                     dodge = int.Parse(data[2]),
                     def = int.Parse(data[3]),
-                    cost = int.Parse(data[6])
+                    repairCost = int.Parse(data[4]),
+                    cost = int.Parse(data[5]),
+                    durability = int.Parse(data[6]),
+                    repairCostModifier = int.Parse(data[7])
                 });
             }
         }
@@ -405,7 +659,7 @@ public class InventoryLists{
         armourInventory[0,2]=1;
         //Potions
 
-        equipmentDbString = File.ReadAllLines(@"Potions.txt"); //loading ALL of Armour data into a variable
+        equipmentDbString = File.ReadAllLines(@"Inventory\Potions.txt"); //loading ALL of Potion data into a variable
         foreach (string line in equipmentDbString){
             if (!(line[0] == '/')){
                 if(line[0]=='h'){
@@ -444,5 +698,59 @@ public class InventoryLists{
         potionInventory[0,1]=0;
         potionInventory[2,0]=0;
         potionInventory[2,1]=1;
+
+        equipmentDbString = File.ReadAllLines(@"Inventory\Spells.txt"); //loading ALL of Spell data into a variable
+        foreach (string line in equipmentDbString){
+            if (!(line[0] == '/')){
+                if(line[0]=='o'){
+                    string[] data = line.Split('|');
+
+                    offensiveSpell.Add(new offensiveSpell() {
+                        name = data[1],
+                        dmg = int.Parse(data[2]),
+                        aoe = bool.Parse(data[3]),
+                        manaCost = int.Parse(data[4]),
+                        cost = int.Parse(data[5])
+                    });
+                }
+                if(line[0]=='u'){
+                    string[] data = line.Split('|');
+
+                    utilitySpell.Add(new utilitySpell() {
+                        name = data[1],
+                        atkModifier = int.Parse(data[2]),
+                        defModifier = int.Parse(data[3]),
+                        acModifier = int.Parse(data[4]),
+                        healing = int.Parse(data[5]),
+                        duration = int.Parse(data[6]),
+                        manaCost = int.Parse(data[7]),
+                        cost = int.Parse(data[8])
+                    });
+                }
+            }
+        }
+        spellInventory[0,0]=1;
+        spellInventory[0,1]=0;
+        spellInventory[1,0]=0;
+        spellInventory[1,1]=1;
+        spellInventory[2,0]=1;
+        spellInventory[2,1]=1;
+        spellInventory[3,0]=2;
+        spellInventory[3,1]=1;
+
+
+        equipmentDbString = File.ReadAllLines(@"Inventory\Miscellaneous.txt"); //loading ALL of Misc data into a variable
+        foreach (string line in equipmentDbString){
+            if (!(line[0] == '/')){
+                string[] data = line.Split('|');
+
+                miscItem.Add(new misc() {
+                    whatItIs = data[0],
+                    name = data[1],
+                    description = data[2],
+                    cost = int.Parse(data[3])
+                });
+            }
+        }
     }
 }

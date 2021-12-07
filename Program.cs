@@ -4,9 +4,12 @@ using System.Collections.Generic;
 Fight.ongoing=false;
 int hadEnough = 0;
 string playerName;
-
+bool game = true;
 
 InventoryLists.inventorySetup();
+for(int i =0; i < 13; i++){
+    InventoryLists.AddMiscItem(i,1);
+}
 FightingStyles.fightingStyleSetup();
 Inventory.actionInventory();
 
@@ -70,5 +73,10 @@ Console.WriteLine("As you set out on your Journey, your first steps lead you to 
 Console.WriteLine("Before you a little Bunny's jumping around.");
 Console.ReadLine();
 
+
+//Game loop.
+while(game==true){
+
+}
 End:
 Console.ReadLine();
