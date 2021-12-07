@@ -435,6 +435,7 @@ public class Inventory{
             if(InventoryLists.miscInventory.Count == 0){
                 Console.WriteLine("|            -=Empty=-            |");
             } else {
+                Console.WriteLine("| Page: "+(page+1)+"                         |");
                 if(InventoryLists.miscInventory.Count<10){
                     for(int i = 0; i < InventoryLists.miscInventory.Count; i++){
                         string linefiller = "                                 ";        
@@ -466,7 +467,7 @@ public class Inventory{
                 answer="0";
             } else if(pageTotal>0){
                 Console.WriteLine("        Move between pages");
-                Console.WriteLine("       by typing '<' or '<'");
+                Console.WriteLine("       by typing '<' or '>'");
                 Console.WriteLine("        or Inspect an item");
                 answer=Console.ReadLine();
             } else {    

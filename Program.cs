@@ -2,7 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 Fight.ongoing=false;
-int hadEnough = 0;
 string playerName;
 bool game = true;
 
@@ -13,48 +12,12 @@ for(int i =0; i < 13; i++){
 FightingStyles.fightingStyleSetup();
 Inventory.actionInventory();
 
-
-Start:
 Console.WriteLine("RPG adventure of the CMD");
 Console.WriteLine("  Write Start to Begin");
 Console.WriteLine();
+Console.ReadLine();
 //Console.WriteLine("Write Rules to learn how to play");
 
-Choices:
-string WhatPlayerDid = Console.ReadLine().ToLower(); //lets the player choose between starting,
-if (WhatPlayerDid == "start"){              //checking how the game works,
-    goto StartOfAdventure;                 //and for those who can't follow instructions.
-} else if (WhatPlayerDid == "Rules"){
-    Console.WriteLine("u moma");
-
-    Console.ReadLine();
-    goto Start;
-} else {
-    if (hadEnough > 5){
-        Console.WriteLine("You're supposed to write 'Start' nothing else.");
-        Console.WriteLine("You can do it, c'mon");
-        string death = Console.ReadLine().ToLower();
-        if (death == "start"){
-            Console.WriteLine();
-            Console.WriteLine("I knew you could do it!");
-            Console.ReadLine();
-            goto StartOfAdventure;
-        } else {
-            Console.WriteLine();
-            Console.WriteLine("You know what, I've had enough.");
-            goto End;
-        }
-    }
-    Console.WriteLine("Try that again");
-    hadEnough++;
-    Console.WriteLine();
-    goto Choices;
-}
-
-
-
-
-StartOfAdventure:
 Console.Clear();
 Console.WriteLine("What is your name Adventurer?");
 player.name = Console.ReadLine();
@@ -78,5 +41,4 @@ Console.ReadLine();
 while(game==true){
 
 }
-End:
 Console.ReadLine();
