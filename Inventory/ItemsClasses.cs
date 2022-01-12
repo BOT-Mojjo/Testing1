@@ -69,7 +69,7 @@ class utilitySpell{
 }
 //MiscInventory
 class misc{
-    public string whatItIs;
+    public string type;
     public string name;
     public string description;
     public int cost;
@@ -84,7 +84,7 @@ class player{
     public static int mana;
     public static int atkBuff;
     public static int defBuff;
-    public static int coins = valueConvert.genRandom.Next(5,15);
+    public static int coins = miscFunctions.genRandom.Next(5,15);
 }
 
 //enemies

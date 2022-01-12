@@ -25,7 +25,7 @@ static public class FightingStyles{
         fightingStyle[1] = 4;              //[1]=+def%
     }
     static public void actionStyleChange(){      //gör skälva bytet av fightingStyle
-        int styleChangedTo = valueConvert.StrToInt(Console.ReadLine());
+        int styleChangedTo = miscFunctions.StrToInt(Console.ReadLine());
         if (styleChangedTo == 0){
         } else {
             string[] tempStyleData = fightingStylesDBString[int.Parse(fightingStylesLearned[styleChangedTo - 1, 2])].Split("|");    //DBstring[idnummer från Learned[vadman vill byta till, id nummer plats i array]]

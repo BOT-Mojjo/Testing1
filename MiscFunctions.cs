@@ -1,5 +1,6 @@
-public class valueConvert{
-    static public System.Random genRandom = new System.Random();
+using System;
+public class miscFunctions{
+    static public Random genRandom = new Random();
 
     static public int StrToInt(string text){
         int ParsedNumber;                                     //checks if the string can be used with int.parse
@@ -8,5 +9,19 @@ public class valueConvert{
         } else {
             return 0;
         }
+    }
+    static public bool GoBack(){
+        Console.WriteLine("           Go back? y/n");
+        string answer = Console.ReadLine().ToLower();
+        if(answer == "y" || answer == "yes"){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static public string PadEqual(string str, int desiredLength){
+        string paddedString=str.PadLeft(((desiredLength-str.Length)/2)+str.Length);
+        return paddedString.PadRight(desiredLength);
     }
 }

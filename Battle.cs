@@ -1,20 +1,22 @@
 using System;
 using System.IO;
 public class Fight{
-    static public bool ongoing = true;
+    static public bool ongoing = false;
     static public void inFight(){
+        ongoing=true;
         while (ongoing == true){
-            string enemyName; // Names should always be 11 Characters long, no exceptions even if you have to just fill them with spaces.
-            int enemyHealth;
+            //int[] fightInv;
+            string enemyName;
+            float enemyHealth = 5;
             int maxEnemyHealth;
             string enemyAction;
-            int enemy = valueConvert.genRandom.Next(0, 1);
+            int enemy = miscFunctions.genRandom.Next(0, 1);
             string[] enemyDbString = File.ReadAllLines(@"EnemySpecifics.txt");  //getting all of the enemy data into a variable 
             string[] currentEnemy = enemyDbString[1].Split('|');    //Splitting the data for the current enemy 
                                                                     //into usable chunks
 
             enemyHealth = int.Parse(currentEnemy[1]);
-            maxEnemyHealth = enemyHealth;
+            maxEnemyHealth = (int)Math.Ceiling(enemyHealth);
             enemyAction = "Bite";
             enemyName = currentEnemy[0];
             while (enemyHealth > 0){
@@ -41,7 +43,7 @@ public class Fight{
                 Console.WriteLine("|  3:Flee     4:Inventory |");
                 Console.WriteLine("+-----------------------+");
                 playerAction:
-                int PlayerAction = valueConvert.StrToInt(Console.ReadLine());
+                int PlayerAction = miscFunctions.StrToInt(Console.ReadLine());
                 Console.Clear();
                 switch (PlayerAction){
                     case 0:
@@ -74,14 +76,18 @@ public class Fight{
             }
 
             void actionAttack(){ //tar hand om matten och attack id för attaken
-                int attackUsed = valueConvert.StrToInt(Console.ReadLine());
-                int attackRoll = valueConvert.genRandom.Next(5, 20);
+                int attackUsed = miscFunctions.StrToInt(Console.ReadLine());
+                int attackRoll = miscFunctions.genRandom.Next(5, 20);
                 if (attackRoll < int.Parse(currentEnemy[2])){
                     Console.WriteLine("You Missed");
                     Console.ReadLine();
                 } else {
-                   // enemyHealth -= equipedAttacks[attackUsed - 1] * (fightingStyle[0] / 100);
-                   // Console.WriteLine("You hit! Dealing " + equipedAttacks[attackUsed - 1] * (fightingStyle[0] / 100) + " dmg!");
+                    if(attackUsed%2==0){
+                        attackUsed=attackUsed/2;
+                        enemyHealth =- InventoryLists.FetchWeaponDmg(attackUsed) * ((1+(FightingStyles.fightingStyle[0])+player.atkBuff)/100);
+                    }
+                    //enemyHealth -= [attackUsed - 1] * 1+(FightingStyles.fightingStylesLearned[0] / 100) * 1+(player.atkBuff/100);
+                    //Console.WriteLine("You hit! Dealing " + equipedAttacks[attackUsed - 1] * (fightingStyle[0] / 100) + " dmg!");
                     Console.ReadLine();
                 }
             }

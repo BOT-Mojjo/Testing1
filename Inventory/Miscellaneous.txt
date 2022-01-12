@@ -3,11 +3,12 @@ Utility|Rope|A simple sturdy Rope.|15
 AnimalPart|Wolf Claws|Claws of a Wolf.#Can probably be sold in the#guild for a pittance.|4
 Utility|Torch|A simple wooden Torch.#Will probably last a few hours.|20
 Utility|Lantern|A simple hooded oil Lantern.#Will probably last a day or two|40
-Utility|Empty Lantern|A simple hooded oil Lantern.#This one has run out of fuel,#but can be refilled with some#lantern oil.|10
-Utility|Lantern Oil.|Can be used to refill#simple oil Lanterns|30
+Utility|Burnt Lantern|A simple hooded oil Lantern.#This one has run out of fuel,#but can be refilled with some#lantern oil.|10
+Utility|Lantern Oil|Can be used to refill#simple oil Lanterns|30
 MonsterPart|Goblin Ear|The ear of a Goblin.#Can be turned in at#the Guild for a bounty.|4
 AnimalPart|Direwolf Claws|The claws of a Direwolf.#A meaner and bigger ancestor of#normal wolfs. Can be turned in at#the Guild for a bounty.|10
 Utility|Mana Lantern|A Magical versioin of#a normal Lantern.#It draws fuel from the#ambient Mana.|100
 Utility|Dead Mana Lantern|A Mana Lantern#that ran out of fuel.#Most mages should be able#to relight it.|30
-MonsterPart|Orc Tusk|The tusk of an Orc.#Can be turned in at#the Guild for a bounty.|10
+MonsterPart|Orc Tusks|The tusk of an Orc.#Can be turned in at#the Guild for a bounty.|10
+MetalOre|Iron Ore|A standard Chunk of Iron ore.#A Blacksmith would probably#be happy to buy it.|50
 /WhatItIs|Name|Cost|Description
