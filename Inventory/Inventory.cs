@@ -530,6 +530,17 @@ public class InventoryLists{
             miscInventory.Add($"{itemID}|{itemCount}");
         }
     }
+    static public void RemoveMiscItem(int inventoryID, int itemCount){
+        string[] item = miscInventory[inventoryID-1].Split("|");
+        item[1] = $"{int.Parse(item[1])-itemCount}";
+        if(int.Parse(item[1]) <= 0){
+            miscInventory.RemoveAt(inventoryID-1);
+        } else {
+            miscInventory[inventoryID-1] = $"{item[0]}|{item[1]}";
+        }
+    }
+
+
     static public void inventorySetup(){
         //Weaponry Setup
 

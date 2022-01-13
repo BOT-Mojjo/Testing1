@@ -5,11 +5,15 @@ Fight.ongoing=false;
 string playerName;
 bool game = true;
 
+
 InventoryLists.inventorySetup();
 for(int i =0; i < 13; i++){
-    InventoryLists.AddMiscItem(i,1);
+    InventoryLists.AddMiscItem(i,5);
 }
+InventoryLists.RemoveMiscItem(1,3);
+InventoryLists.RemoveMiscItem(3,5);
 FightingStyles.fightingStyleSetup();
+Shops.actionGuild();
 Inventory.actionInventory();
 
 Console.WriteLine("RPG adventure of the CMD");
