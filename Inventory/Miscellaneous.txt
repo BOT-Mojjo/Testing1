@@ -11,4 +11,5 @@ Utility|Mana Lantern|A Magical versioin of#a normal Lantern.#It draws fuel from 
 Utility|Dead Mana Lantern|A Mana Lantern#that ran out of fuel.#Most mages should be able#to relight it.|30
 MonsterPart|Orc Tusks|The tusk of an Orc.#Can be turned in at#the Guild for a bounty.|10
 MetalOre|Iron Ore|A standard Chunk of Iron ore.#A Blacksmith would probably#be happy to buy it.|50
+MetalOre|Copper Ore|A normal Chunk of Copper ore#A Blacksmith would probably#be happy to buy it.|40
 /WhatItIs|Name|Cost|Description

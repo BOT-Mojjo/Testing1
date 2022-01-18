@@ -4,17 +4,11 @@ using System.Collections.Generic;
 Fight.ongoing=false;
 string playerName;
 bool game = true;
-
-
-InventoryLists.inventorySetup();
-for(int i =0; i < 13; i++){
-    InventoryLists.AddMiscItem(i,5);
-}
-InventoryLists.RemoveMiscItem(1,3);
-InventoryLists.RemoveMiscItem(3,5);
+Inventory Inv = new Inventory();
+Inventory.InvLists.Add(new InventoryLists());
+Inventory.InvLists[0].inventorySetup();
 FightingStyles.fightingStyleSetup();
-Shops.actionGuild();
-Inventory.actionInventory();
+Shops.actionGuild(0);
 
 Console.WriteLine("RPG adventure of the CMD");
 Console.WriteLine("  Write Start to Begin");
@@ -24,16 +18,16 @@ Console.ReadLine();
 
 Console.Clear();
 Console.WriteLine("What is your name Adventurer?");
-player.name = Console.ReadLine();
+Inventory.Characters[0].name = Console.ReadLine();
 Console.WriteLine();
-while(player.name.Length>15){
+while(Inventory.Characters[0].name.Length>15){
     Console.WriteLine("Would you happen to have a shorter nickname?");
     Console.WriteLine();
     playerName=Console.ReadLine();
 }
 
 //tutorial
-Console.WriteLine("I see. Good luck on your Journey, " + player.name + ".");
+Console.WriteLine("I see. Good luck on your Journey, " + Inventory.Characters[0].name + ".");
 Console.ReadLine();
 Console.Clear();
 Console.WriteLine("As you set out on your Journey, your first steps lead you to The Peaceful Plains");

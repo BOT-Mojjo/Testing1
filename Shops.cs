@@ -3,7 +3,7 @@ using System.Collections.Generic;
 class Shops {
     static string answer;
     static int windowWidth = 35;
-    public static void actionGuild(){ 
+    public static void actionGuild(int player){ 
         bool ongoing = true;
         while (ongoing){   //Standard Meny layout and function, template är kopierad från inventory 
             Console.Clear();
@@ -18,76 +18,38 @@ class Shops {
             switch(miscFunctions.StrToInt(answer)){
                 default:
                 case 0:
-                    ongoing1 = miscFunctions.GoBack();
+                    ongoing = miscFunctions.GoBack();
                     break;
                 case 1:
                     while(ongoing1){
-                        int page = 0;
-                        int pageTotal=0;
-                        List<int> animalPart = new List<int>();
-                        for(int i = 0; i < InventoryLists.miscInventory.Count; i++){
-                            if(InventoryLists.FetchMiscType(i)=="AnimalPart"){
+                        answer = miscFunctions.MiscInvList(windowWidth, "Sell Animal Parts", player, "AnimalPart", "", true, new string[] {"Type the Parts Number", "to sell it."});
+                        List<int> animalPart = new List<int>();  
+                        for(int i = 0; i < Inventory.InvLists[player].miscInventory.Count; i++){
+                            if(Inventory.InvLists[player].FetchMiscType(i)=="AnimalPart"){
                                 animalPart.Add(i);
                             }
                         }
-                        Console.Clear();
-                        Console.WriteLine("+------------=========------------+");
-                        Console.WriteLine("|     --==Mercenary Guild==--     |");
-                        Console.WriteLine("|       -Sell Animal Parts-       |");
-                        if(animalPart.Count == 0){
-                            Console.WriteLine("|         -=Parts Empty=-         |");
-                        } else {
-                            Console.WriteLine("| Page: "+(page+1)+"                         |");
-                            if(animalPart.Count<10){
-                                for(int i = 0; i < animalPart.Count; i++){
-                                    Console.WriteLine("|"+miscFunctions.PadEqual((i+1)+": "+
-                                        InventoryLists.FetchMiscName(animalPart[i])+"*"+InventoryLists.FetchMiscAmount(animalPart[i])
-                                    , windowWidth-2)+"|");
-                                }
-                            } else {
-                                for(int i = 0; i < animalPart.Count-(page*10)-1; i++){
-                                    Console.WriteLine("|"+miscFunctions.PadEqual((i+1+(page*10))+": "+
-                                        InventoryLists.FetchMiscName(animalPart[i])+"*"+InventoryLists.FetchMiscAmount(animalPart[i])
-                                    , windowWidth-2)+"|");
-                                }
-                            }
-                        }
-                        Console.WriteLine("+------------=========------------+");
-                        Console.WriteLine("");
-                        Console.ReadLine();
-                        if(InventoryLists.miscInventory.Count == 0){
-                            answer="0";
-                        } else if(pageTotal>0){
-                            Console.WriteLine("        Move between pages");
-                            Console.WriteLine("       by typing '<' or '>'");
-                            Console.WriteLine("    Sell an Item by inputting");
-                            Console.WriteLine("       it's number instead.");
-                            answer=Console.ReadLine();
-                        }
-                        if(pageTotal>0 && (answer == "<" || answer == ">")){
-                            if(answer == "<"){
-                                if(page==0){
-                                    Console.WriteLine("You're on the first page.");
-                                    Console.ReadKey();
-                                } else {
-                                    page--;
-                                }
-                            } else if(answer == ">"){
-                                if(page==pageTotal){
-                                    Console.WriteLine("You're on the last page.");
-                                    Console.ReadKey();
-                                } else {
-                                    page++;
-                                }
-                            }
-                        } else if(miscFunctions.StrToInt(answer) != 0 && miscFunctions.StrToInt(answer) !> animalPart.Count){
+                        //even though this code is technicaly redundant, i can't get the result from
+                        //inside MiscInvList without annoying, though easily spaghetti fixable complications
+                        if(miscFunctions.StrToInt(answer) > 0 && miscFunctions.StrToInt(answer) < animalPart.Count+1){
+                            string answer2;
                             Console.Clear();
                             Console.WriteLine("+------------=========------------+");
-                            Console.WriteLine("|"+miscFunctions.PadEqual("How many "+InventoryLists.FetchMiscName(int.Parse(answer)-1)+" do you", windowWidth-2)+"|");
+                            Console.WriteLine("|"+miscFunctions.PadEqual("How many "+Inventory.InvLists[player].FetchMiscName(animalPart[int.Parse(answer)-1])+" do you", windowWidth-2)+"|");
                             Console.WriteLine("|          wish to sell?          |");
+                            Console.WriteLine("|"+miscFunctions.PadEqual("1-"+Inventory.InvLists[player].FetchMiscAmount(animalPart[int.Parse(answer)-1]), windowWidth-2)+"|"); // 1-(amount of parts)
                             Console.WriteLine("+------------=========------------+");
-                            answer = Console.ReadLine();
-                            
+                            answer2 = Console.ReadLine();
+                            if(miscFunctions.StrToInt(answer2) > 0 && miscFunctions.StrToInt(answer2) <= Inventory.InvLists[player].FetchMiscAmount(animalPart[int.Parse(answer)-1])){ //if answer > 0 and < amount of parts
+                                Inventory.partyCoins =+ (Inventory.InvLists[player].FetchMiscCost(animalPart[int.Parse(answer)-1])*miscFunctions.StrToInt(answer2))/2;  //curent gold + cost of part*amount of parts / 2
+                                Console.Clear();
+                                Console.WriteLine("+------------=========------------+");
+                                Console.WriteLine("|"+miscFunctions.PadEqual($"You sold {int.Parse(answer2)} {Inventory.InvLists[player].FetchMiscName(animalPart[int.Parse(answer)-1])} for", windowWidth-2)+"|");
+                                Console.WriteLine("|"+miscFunctions.PadEqual($"{Inventory.InvLists[player].FetchMiscCost(animalPart[int.Parse(answer)-1])*miscFunctions.StrToInt(answer2)/2} gold.", windowWidth-2)+"|");
+                                Console.WriteLine("+------------=========------------+");
+                                Inventory.InvLists[player].RemoveMiscItem(animalPart[int.Parse(answer)-1], int.Parse(answer2));
+                                Console.ReadLine();
+                            }
                         } else {
                             ongoing1 = miscFunctions.GoBack();
                         }

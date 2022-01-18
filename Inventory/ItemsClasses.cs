@@ -76,19 +76,19 @@ class misc{
 }
 
 //player
-class player{
-    public static string name;
-    public static int maxHealth;
-    public static int health;
-    public static int maxMana;
-    public static int mana;
-    public static int atkBuff;
-    public static int defBuff;
-    public static int coins = miscFunctions.genRandom.Next(5,15);
+public class player{
+    public string name;
+    public int maxHealth;
+    public int health;
+    public int maxMana;
+    public int mana;
+    public int atkBuff;
+    public int defBuff;
+    public int coins;
 }
 
 //enemies
-class enemy{
+public class enemy{
     public string name;
     public int maxHealth;
     public int health;
