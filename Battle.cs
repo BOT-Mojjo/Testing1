@@ -2,6 +2,7 @@ using System;
 using System.IO;
 public class Fight{
     static public bool ongoing = false;
+    /*
     static public void inFight(){
         ongoing=true;
         while (ongoing == true){
@@ -93,4 +94,5 @@ public class Fight{
             }
         }
     }
+    */
 }

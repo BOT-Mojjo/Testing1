@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class Inventory{
     static public int partyCoins = miscFunctions.genRandom.Next(5,15);
-    static string answer = "";
-    static bool acted = false;
-    static int windowWidth = 35;
-    public static List<player> Characters = new List<player>();
-    public static List<InventoryLists> InvLists = new List<InventoryLists>();
+    string answer = "";
+    bool acted = false;
+    int windowWidth = 35;
+    static public List<player> Characters = new List<player>();
+    static public List<InventoryLists> InvLists = new List<InventoryLists>();
 
     public void actionInventory(int player){
         bool ongoing = true;
@@ -17,7 +17,7 @@ public class Inventory{
             drawInventory(player);
             int openedInventory = miscFunctions.StrToInt(Console.ReadLine());
             if(openedInventory>5 || openedInventory<1){                    
-                ongoing = miscFunctions.GoBack();
+                ongoing = miscFunctions.GoBack(windowWidth);
             }
             Console.Clear();
             switch (openedInventory){
@@ -42,69 +42,73 @@ public class Inventory{
 
     void drawInventory(int player){
         string tempCoins = partyCoins.ToString();
-        while (tempCoins.Length < 4){
+        while (tempCoins.Length < 5){
             tempCoins = tempCoins.Insert(0, "0");
         }
-        Console.WriteLine("+------------=========------------+");
-        Console.WriteLine("|        --==Inventory==--        |");
-        Console.WriteLine("|     1:Weapons     2:Armour      |");
-        Console.WriteLine("|   3:Potions  4:Miscellaneous    |");
-        Console.WriteLine("|    5:Spells     Coins: " + tempCoins + "     |");
-        Console.WriteLine("+------------=========------------+");
-        Console.WriteLine();
-            }
+        miscFunctions.BoxBorder(windowWidth);
+        miscFunctions.BoxLine("--==Inventory==--", windowWidth, "equal");
+        miscFunctions.BoxLine("1:Weapons 2:Armour 3:Potions 4:Miscellaneous 5:Spells", windowWidth, "equal");
+        miscFunctions.BoxLine("Coins:" + tempCoins, windowWidth, "equal");
+        miscFunctions.BoxBorder(windowWidth);
+        // miscFunctions.BoxLine("1:Weapons 2:Armour", windowWidth, "spread");
+        // miscFunctions.BoxLine("3:Potions 4:Miscellaneous", windowWidth, "spread");
+        // miscFunctions.BoxLine("5:Spells Coins:" + tempCoins, windowWidth, "spread");
+        // miscFunctions.BoxBorder(windowWidth);
+        // Console.WriteLine();
+    }
 
     void actionWeaponsInventory(int player){
         bool ongoing = true;
         while(ongoing == true){
             Console.Clear();
-            Console.WriteLine("+------------=========------------+");
-            Console.WriteLine("|     --=Weapons Inventory=--     |");
-            Console.WriteLine("|     -----------------------     |");
-            Console.WriteLine("|        -Equiped Weapons-        |");
+            miscFunctions.BoxBorder(windowWidth);
+            miscFunctions.BoxLine("--=Weapons Inventory=--", windowWidth, "equal");
+            miscFunctions.BoxLine("-----------------------", windowWidth, "equal");
+            miscFunctions.BoxLine("-Equiped Weapons-", windowWidth, "equal");
             for(int i = 0; i < 2; i++){
-                Console.WriteLine($"| Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i)}".PadRight(windowWidth-1)+"|");
+                miscFunctions.BoxLine($"Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i)}", windowWidth);
             }
             Console.WriteLine("|     -----------------------     |");
             Console.WriteLine("|       -UnEquiped Weapons-       |");
             for(int i = 0; i < 5; i++){
-                Console.WriteLine($"| Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i+2)}".PadRight(windowWidth-1)+"|");
+                miscFunctions.BoxLine($"Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i+2)}", windowWidth);
             }
-            Console.WriteLine("+------------=========------------+");
+            miscFunctions.BoxBorder(windowWidth);
             Console.WriteLine("");
-            Console.WriteLine("         Change Weapon? y/n");
+            Console.WriteLine(miscFunctions.PadEqual("Change Weapon? y/n", windowWidth));
             Console.WriteLine();
             answer = Console.ReadLine().ToLower();
             if(answer == "y" || answer =="yes"){  
                 if(acted == true && Fight.ongoing == true){
                     Console.Clear();
-                    Console.WriteLine("You've already used the inventory this turn.");
-                    Console.WriteLine("         Your time is running out.");
+                    miscFunctions.TextBox("You've alredy Used the Inventory this turn. Your time is running out.", windowWidth);
+                    // Console.WriteLine("You've already used the inventory this turn.");
+                    // Console.WriteLine("         Your time is running out.");
                     Console.ReadLine();
                 } else {
                     bool ongoing1  = true;
                     while(ongoing1){                                                 //Let's you change equipped weapon
                         Console.Clear();
                         int temp = 0;       //Used to know what weapon slot is gonna change
-                        Console.WriteLine("+------------=========------------+");       // during the change since i'll be 
+                        miscFunctions.BoxBorder(windowWidth);       // during the change since i'll be 
                         Console.WriteLine("|       -=Equiped Weapons=-       |");       // overwriting the old one
                         for(int i = 0; i < 2; i++){
                             Console.WriteLine($"| Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i)}".PadRight(windowWidth-1)+"|");
                         }
-                        Console.WriteLine("+------------=========------------+");
+                        miscFunctions.BoxBorder(windowWidth);
                         Console.WriteLine();
-                        Console.WriteLine("What weapon do you want to change?");
+                        Console.WriteLine(miscFunctions.PadEqual("What weapon do you want to change?", windowWidth));
                         Console.WriteLine();
                         temp = miscFunctions.StrToInt(Console.ReadLine());               // Input from user, what weapon slot to change
                         if(temp!=1 && temp !=2){                    
-                            ongoing1 = miscFunctions.GoBack();
+                            ongoing1 = miscFunctions.GoBack(windowWidth);
                         }else{
-                            Console.WriteLine("+------------=========------------+");       //Choosig what weapon to switch to.
+                            miscFunctions.BoxBorder(windowWidth);       //Choosig what weapon to switch to.
                             Console.WriteLine("|      -=UnEquiped Weapons=-      |");       
                             for(int i = 0; i < 5; i++){
                                 Console.WriteLine($"| Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i+2)}".PadRight(windowWidth-1)+"|");
                             }
-                            Console.WriteLine("+------------=========------------+");
+                            miscFunctions.BoxBorder(windowWidth);
                             Console.WriteLine();
                             Console.WriteLine("    What weapon do you want to");
                             Console.WriteLine("            switch to?");
@@ -112,7 +116,7 @@ public class Inventory{
                             int[] temp2 = new int[3];
                             temp2[1] = miscFunctions.StrToInt(Console.ReadLine());
                             if(temp2[1] == 0 || temp2[1] > 5){
-                                ongoing1 = miscFunctions.GoBack();
+                                ongoing1 = miscFunctions.GoBack(windowWidth);
                             } else {
                                 temp2[0]=temp-1;
                                 temp2[1]++;
@@ -126,7 +130,7 @@ public class Inventory{
                     }
                 }
             } else {
-                ongoing = miscFunctions.GoBack();       
+                ongoing = miscFunctions.GoBack(windowWidth);       
             }
         }
     }
@@ -135,19 +139,19 @@ public class Inventory{
     void actionArmourInventory(int player){
         if(Fight.ongoing==true){
             Console.WriteLine();
-            Console.WriteLine("You're in a fight, trying to change armour could be fatal.");
+            miscFunctions.TextBox("You're in a fight. Changeing armour could be fatal.", windowWidth);
             Console.ReadLine();
         } else{
             bool ongoing = true;
             while(ongoing==true){
                 Console.Clear();  
-                Console.WriteLine("+------------=========------------+");
+                miscFunctions.BoxBorder(windowWidth);
                 Console.WriteLine("|     --=Armours Inventory=--     |");
                 if(true){
                     Console.WriteLine($"| Equiped Armour: {InvLists[player].FetchArmourName(0)}".PadRight(windowWidth-1)+"|");
                     Console.WriteLine($"| Spare Armour: {InvLists[player].FetchArmourName(1)}".PadRight(windowWidth-1)+"|");
                 }
-                Console.WriteLine("+------------=========------------+");
+                miscFunctions.BoxBorder(windowWidth);
                 Console.WriteLine("        Change Armour? y/n");
                 Console.WriteLine();
                 answer=Console.ReadLine().ToLower();
@@ -159,7 +163,7 @@ public class Inventory{
                         InvLists[player].armourInventory[1,i]=temp[i];
                     }
                 } else {
-                    ongoing = miscFunctions.GoBack();
+                    ongoing = miscFunctions.GoBack(windowWidth);
                 }
             }
         }
@@ -170,31 +174,28 @@ public class Inventory{
         bool ongoing = true;
         while(ongoing == true){
             Console.Clear();
-            Console.WriteLine("+------------=========------------+");
+            miscFunctions.BoxBorder(windowWidth);
             Console.WriteLine("|        --=Potion Belt=--        |");
             for(int i = 0; i < 7; i++){
                 Console.WriteLine($"| Potion slot {i+1}: {InvLists[player].FetchPotionName(i)}".PadRight(windowWidth-1)+"|");
             }
-            Console.WriteLine("+------------=========------------+");
+            miscFunctions.BoxBorder(windowWidth);
             Console.WriteLine("   'Move' to move potions around");
             Console.WriteLine("       'Use' to use a potion");
-            Console.Write("               ");
             answer=Console.ReadLine().ToLower();
             if(answer == "move"){
                 int[] temp = new int[4];
                 Console.Clear();
-                Console.WriteLine("+------------=========------------+");
+                miscFunctions.BoxBorder(windowWidth);
                 Console.WriteLine("|        --=Potion Belt=--        |");
                 for(int i = 0; i < 7; i++){
                     Console.WriteLine($"| Potion slot {i+1}: {InvLists[player].FetchPotionName(i)}".PadRight(windowWidth-1)+"|");
                 }
-                Console.WriteLine("+------------=========------------+");
+                miscFunctions.BoxBorder(windowWidth);
                 Console.WriteLine();
                 Console.WriteLine("            Move Potion");
-                Console.Write("                 ");
                 temp[0]=miscFunctions.StrToInt(Console.ReadLine())-1;
                 Console.WriteLine("              To Slot");
-                Console.Write("                 ");
                 temp[1]=miscFunctions.StrToInt(Console.ReadLine())-1;
                 temp[2]=InvLists[player].potionInventory[temp[0],0];  //puts pot 1 into temp storage
                 temp[3]=InvLists[player].potionInventory[temp[0],1];
@@ -206,25 +207,25 @@ public class Inventory{
 
             } else if(acted == true && answer=="use" && Fight.ongoing == true){
                 Console.Clear();
-                Console.WriteLine("You've already used the inventory this turn.");
-                Console.WriteLine("         Your time is running out.");
+                miscFunctions.TextBox("You've already used the inventory this turn. Your time is running out.", windowWidth);
                 Console.ReadLine();
             } else if(answer == "use"){   // using potions
                 bool ongoing1 = true;
                 Console.Clear();
-                Console.WriteLine("+------------=========------------+");
+                miscFunctions.BoxBorder(windowWidth);
                 Console.WriteLine("|  --=What potion do you Use?=--  |");
                 for(int i = 0; i < 7; i++){
                     Console.WriteLine($"| Potion slot {i+1}: {InvLists[player].FetchPotionName(i)}".PadRight(windowWidth-1)+"|");
                 }
-                Console.WriteLine("+------------=========------------+");
-                Console.Write("                 ");
-                while(ongoing1 == true){
+                miscFunctions.BoxBorder(windowWidth);
+                while(ongoing1){
                     int potionUsed = miscFunctions.StrToInt(Console.ReadLine());
                     if(potionUsed>0 && potionUsed<8){  //a potion is used
                         potionUsed--; //nudges the variable so it lines up with the array, since it starts at 0 and the meny at 1.
                         if(InvLists[player].FetchPotionName(potionUsed)=="Empty"){
-                            Console.WriteLine("That vial is empty.");
+                            miscFunctions.TextBox("That vial is empty.", windowWidth);
+                            Console.ReadLine();
+                            ongoing1 = false;
                         } else {
                             int temp2;
                             switch(InvLists[player].potionInventory[potionUsed,1]){  //differentiates what happens based on potion type
@@ -235,7 +236,7 @@ public class Inventory{
                                         Characters[player].health=Characters[player].maxHealth;
                                     }
                                     temp2 = Characters[player].health - temp2;
-                                    Console.WriteLine("You Regained "+temp2+"Hp!");
+                                    miscFunctions.TextBox("You Regained "+temp2+"Hp!", windowWidth);
                                     break;
                                 case 1:
                                     temp2 = Characters[player].mana;
@@ -244,14 +245,14 @@ public class Inventory{
                                         Characters[player].mana=Characters[player].maxMana;
                                     }
                                     temp2 = Characters[player].mana - temp2;
-                                    Console.WriteLine("Your Replenished "+temp2+"Mp!");
+                                    miscFunctions.TextBox("Your Replenished "+temp2+"Mp!", windowWidth);
                                     break;
                                 case 2:
                                     int[] temp3 = new int[2];
                                     temp3 = InvLists[player].FetchBuffPotEffect(potionUsed);
                                     Characters[player].atkBuff = Characters[player].atkBuff+temp3[0];
                                     Characters[player].defBuff = Characters[player].defBuff+temp3[1];
-                                    Console.WriteLine("You feel strength surge through you.");
+                                    miscFunctions.TextBox("You feel strength surge through you.", windowWidth);
                                     break;
                                 default:   
                                     //Only fires if there is a potion with a type outside of the Health/Mana/Buff Trifecta, and the array doesn't spit out a failure
@@ -267,11 +268,11 @@ public class Inventory{
                             ongoing1=false;
                         } 
                     } else {
-                        ongoing1 = miscFunctions.GoBack();
+                        ongoing1 = miscFunctions.GoBack(windowWidth);
                     }
                 }
             } else {
-                ongoing = miscFunctions.GoBack();
+                ongoing = miscFunctions.GoBack(windowWidth);
             }
         }
     }
@@ -281,7 +282,7 @@ public class Inventory{
         bool ongoing = true;
         while(ongoing==true){
             Console.Clear();
-            Console.WriteLine("+------------=========------------+");
+            miscFunctions.BoxBorder(windowWidth);
             Console.WriteLine("|     --=Spells Inventory=--      |");
             Console.WriteLine("|        -Readied Spells-         |");
             for(int i = 0; i < 2; i++){
@@ -292,47 +293,46 @@ public class Inventory{
             for(int i = 0; i < 5; i++){ 
                 Console.WriteLine($"| Spell slot {i+1}: {InvLists[player].FetchSpellName(i+2)}".PadRight(windowWidth-1)+"|");
             }
-            Console.WriteLine("+------------=========------------+");
+            miscFunctions.BoxBorder(windowWidth);
             Console.WriteLine("");
             Console.WriteLine("     Change readied spell? y/n");
             answer=Console.ReadLine().ToLower();
             if(answer == "y" || answer =="yes"){  
                 if(acted == true && Fight.ongoing == true){
                     Console.Clear();
-                    Console.WriteLine("You've already used the inventory this turn.");
-                    Console.WriteLine("         Your time is running out.");
+                    miscFunctions.TextBox("You've alredy Used the Inventory this turn. Your time is running out.", windowWidth);
                     Console.ReadLine();
                 } else { 
                     bool ongoing1 = true;
                      while(ongoing1){
                         int[] temp = new int[4];       //Used to know what weapon slot is gonna change
                         Console.Clear();    //Let's you change equipped weapon
-                        Console.WriteLine("+------------=========------------+");       // during the change since i'll be 
+                        miscFunctions.BoxBorder(windowWidth);       // during the change since i'll be 
                         Console.WriteLine("|        -=Redied Spells=-        |");       // overwriting the old one
                         for(int i = 0; i < 2; i++){
                             Console.WriteLine($"| Spell slot {i+1}: {InvLists[player].FetchSpellName(i)}".PadRight(windowWidth-1)+"|");
                         }
-                        Console.WriteLine("+------------=========------------+");
+                        miscFunctions.BoxBorder(windowWidth);
                         Console.WriteLine();
                         Console.WriteLine(" What spell do you want to change?");
                         Console.WriteLine();
                         temp[0] = miscFunctions.StrToInt(Console.ReadLine())-1;               // Input from user, what weapon slot to change
                         if(temp[0] !=0 && temp[0] !=1){                    
-                            ongoing = miscFunctions.GoBack();
+                            ongoing = miscFunctions.GoBack(windowWidth);
                         }else{
-                            Console.WriteLine("+------------=========------------+");       //Choosig what weapon to switch to.
+                            miscFunctions.BoxBorder(windowWidth);       //Choosig what weapon to switch to.
                             Console.WriteLine("|         -=Known Spells=-        |");       
                             for(int i = 0; i < 5; i++){
                                 Console.WriteLine($"| Spell slot {i+1}: {InvLists[player].FetchSpellName(i+2)}".PadRight(windowWidth-1)+"|");
                             }
-                            Console.WriteLine("+------------=========------------+");
+                            miscFunctions.BoxBorder(windowWidth);
                             Console.WriteLine();
                             Console.WriteLine("     What Spell do you want to");
                             Console.WriteLine("            switch to?");
                             Console.WriteLine();
                             temp[1] = miscFunctions.StrToInt(Console.ReadLine());
                             if(temp[1] == 1 || temp[1] > 5){
-                                ongoing1 = miscFunctions.GoBack();
+                                ongoing1 = miscFunctions.GoBack(windowWidth);
                             } else {
                                 temp[1]++;
                                 temp[2]=InvLists[player].spellInventory[temp[0],0];  //puts pot 1 into temp storage
@@ -348,7 +348,7 @@ public class Inventory{
                     }
                 }
             } else {
-                ongoing = miscFunctions.GoBack();
+                ongoing = miscFunctions.GoBack(windowWidth);
             }
         }
     }
@@ -358,25 +358,28 @@ public class Inventory{
     void actionMiscellaneousInv(int player){
         bool ongoing = true;
         if(Fight.ongoing){
-
+            Console.Clear();
+            miscFunctions.TextBox("You don't have time to ruffle around in your bag!", windowWidth);
+            ongoing = false;
+            Console.ReadLine();
         } else {                                                            //Keeps track of what page you're on
-            int pageTotal=(InvLists[player].miscInventory.Count/12);                  //Keeps track of how many pages your inventory has
+            int pageTotal=(InventoryLists.miscInventory.Count/12);                  //Keeps track of how many pages your inventory has
             while (ongoing){
-                answer = miscFunctions.MiscInvList(windowWidth, "Miscellaneous Inventory", player, "all", "", false, new string[] {"Inspect an Item by inputting", "it's number instead"});
-                if(miscFunctions.StrToInt(answer)==0 || miscFunctions.StrToInt(answer) > InvLists[player].miscInventory.Count+1){
-                    ongoing = miscFunctions.GoBack();
+                answer = miscFunctions.MiscInvList(windowWidth, "Miscellaneous Inventory", "all", "", false, new string[] {"Inspect an Item by inputting", "it's number instead"});
+                if(miscFunctions.StrToInt(answer)==0 || miscFunctions.StrToInt(answer) > InventoryLists.miscInventory.Count+1){
+                    ongoing = miscFunctions.GoBack(windowWidth);
                 } else {
                     int i = miscFunctions.StrToInt(answer)-1;
                     Console.Clear();
-                    Console.WriteLine("+------------=========------------+");
-                    string name = InvLists[player].FetchMiscName(i);
+                    miscFunctions.BoxBorder(windowWidth);
+                    string name = InventoryLists.FetchMiscName(i);
                     Console.WriteLine("|"+miscFunctions.PadEqual("--="+name+"=--", windowWidth-2)+"|");
-                    Console.WriteLine("|"+miscFunctions.PadEqual("Count: "+InvLists[player].FetchMiscAmount(i), windowWidth-2)+"|");
-                    string[] tempDescription = InvLists[player].FetchMiscDesc(i);
+                    Console.WriteLine("|"+miscFunctions.PadEqual("Count: "+InventoryLists.FetchMiscAmount(i), windowWidth-2)+"|");
+                    string[] tempDescription = InventoryLists.FetchMiscDesc(i);
                     foreach(string line in tempDescription){
                         Console.WriteLine("|"+miscFunctions.PadEqual(line, windowWidth-2)+"|");
                     }
-                    Console.WriteLine("+------------=========------------+");
+                    miscFunctions.BoxBorder(windowWidth);
                     Console.ReadLine();
                 }
             }
@@ -398,22 +401,22 @@ public class Inventory{
 */
 public class InventoryLists{
     public int[] weaponInventory = new int[7];            //Actual weapon inventory
-    List<MeleeWeapon> weapons = new List<MeleeWeapon>();  //Acts as a database fromwhere to draw weapon stats
+    static List<MeleeWeapon> weapons = new List<MeleeWeapon>();  //Acts as a database fromwhere to draw weapon stats
     
     public int[,] armourInventory = new int[2,3];         //armour inv
-    List<Armour> armour = new List<Armour>();             //armour db
+    static List<Armour> armour = new List<Armour>();             //armour db
 
     public int[,] potionInventory = new int[7,2];
-    List<healingItem> healingItem = new List<healingItem>();
-    List<manaItem> manaItem = new List<manaItem>();
-    List<buffItem> buffItem = new List<buffItem>();
+    static List<healingItem> healingItem = new List<healingItem>();
+    static List<manaItem> manaItem = new List<manaItem>();
+    static List<buffItem> buffItem = new List<buffItem>();
 
     public int[,] spellInventory = new int[7,2];
-    List<offensiveSpell> offensiveSpell = new List<offensiveSpell>();
-    List<utilitySpell> utilitySpell = new List<utilitySpell>();
+    static List<offensiveSpell> offensiveSpell = new List<offensiveSpell>();
+    static List<utilitySpell> utilitySpell = new List<utilitySpell>();
 
-    public List<string> miscInventory = new List<string>();
-    List<misc> miscItem = new List<misc>();
+    public static  List<string> miscInventory = new List<string>();
+    static List<misc> miscItem = new List<misc>();
     
     public string FetchWeaponName(int InventoryID){
         return weapons[weaponInventory[InventoryID]].name;
@@ -445,27 +448,6 @@ public class InventoryLists{
         }
     }
 
-    public string FetchMiscName(int InventoryID){
-        string[] temp = miscInventory[InventoryID].Split("|");
-        return miscItem[int.Parse(temp[0])].name;
-    }
-    public int FetchMiscAmount(int InventoryID){
-        string[] temp = miscInventory[InventoryID].Split("|");
-        return int.Parse(temp[1]);
-    }
-    public string[] FetchMiscDesc(int InventoryID){
-        string[] temp = miscInventory[InventoryID].Split("|");
-        return miscItem[int.Parse(temp[0])].description.Split("#");
-    }
-    public string FetchMiscType(int InventoryID){
-        string[] temp = miscInventory[InventoryID].Split("|");
-        return miscItem[int.Parse(temp[0])].type;
-    }
-    public int FetchMiscCost(int InventoryID){
-        string[] temp = miscInventory[InventoryID].Split("|");
-        return miscItem[int.Parse(temp[0])].cost;
-    }
-
     public int FetchHealpotAmount(int InventoryID){
         return healingItem[potionInventory[InventoryID,0]].healing;
     }
@@ -478,13 +460,13 @@ public class InventoryLists{
         temp[1] = buffItem[potionInventory[InventoryID,0]].defEffect;
         return temp;
     }
-    public void AddMiscItem(int itemID, int itemCount){
+    public static void AddMiscItem(int itemID, int itemCount){
         int listID = 0;
         bool exists = false;
         foreach(string item in miscInventory){
             string[] temp = item.Split("|");
             if(itemID==int.Parse(temp[0])){
-                string newItem = $"{itemID}|{int.Parse(temp[1])+itemCount}";
+                string newItem = $"{itemID}|{int.Parse(temp[1])+itemCount}";  //Items ID| amount of items
                 miscInventory.RemoveAt(listID);
                 miscInventory.Add(newItem);
                 exists = true;
@@ -496,14 +478,53 @@ public class InventoryLists{
             miscInventory.Add($"{itemID}|{itemCount}");
         }
     }
-    public void RemoveMiscItem(int inventoryID, int itemCount){
-        string[] item = miscInventory[inventoryID].Split("|");
-        item[1] = $"{int.Parse(item[1])-itemCount}";
-        if(int.Parse(item[1]) <= 0){
-            miscInventory.RemoveAt(inventoryID);
+    public static void RemoveMiscItem(int ID, bool itemID, int itemCount){ 
+        if(itemID){                                                        
+            int listID = 0;
+            foreach(string item in miscInventory){
+                string[] temp = item.Split("|");
+                if(ID==int.Parse(temp[0])){
+                    //string newItem = $"{itemID}|{int.Parse(temp[1])-itemCount}";  //Items ID| amount of items redundant
+                    temp[1] = $"{int.Parse(temp[1])-itemCount}";  //temp serves the same function as "item" in the inventoryID version
+                    if(int.Parse(temp[1]) <= 0){
+                        miscInventory.RemoveAt(listID);
+                    } else {
+                        miscInventory[ID] = $"{temp[0]}|{temp[1]}";
+                    }
+                    break;
+                }
+                listID++;
+            }
         } else {
-            miscInventory[inventoryID] = $"{item[0]}|{item[1]}";
+            string[] item = miscInventory[ID].Split("|");
+            item[1] = $"{int.Parse(item[1])-itemCount}";
+            if(int.Parse(item[1]) <= 0){
+                miscInventory.RemoveAt(ID);
+            } else {
+                miscInventory[ID] = $"{item[0]}|{item[1]}";
+            }
         }
+    }
+
+    static public string FetchMiscName(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return miscItem[int.Parse(temp[0])].name;
+    }
+    static public int FetchMiscAmount(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return int.Parse(temp[1]);
+    }
+    static public string[] FetchMiscDesc(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return miscItem[int.Parse(temp[0])].description.Split("#");
+    }
+    static public string FetchMiscType(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return miscItem[int.Parse(temp[0])].type;
+    }
+    static public int FetchMiscCost(int InventoryID){
+        string[] temp = miscInventory[InventoryID].Split("|");
+        return miscItem[int.Parse(temp[0])].cost;
     }
 
 
@@ -646,5 +667,6 @@ public class InventoryLists{
         for(int i = 0; i < miscItem.Count; i++){
             AddMiscItem(i,5);
         }
+        Inventory.Characters.Add(new player());
     }
-} // CREATE PLAYER
+}

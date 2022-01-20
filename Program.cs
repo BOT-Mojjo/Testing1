@@ -4,11 +4,39 @@ using System.Collections.Generic;
 Fight.ongoing=false;
 string playerName;
 bool game = true;
+bool ongoing = true;
 Inventory Inv = new Inventory();
+string answer;
+int windowWidth = 35;
 Inventory.InvLists.Add(new InventoryLists());
 Inventory.InvLists[0].inventorySetup();
+// Inv.actionInventory(0);
+// Console.ReadLine();
 FightingStyles.fightingStyleSetup();
-Shops.actionGuild(0);
+// Shops.actionGuild();
+
+Console.Clear();
+while(ongoing){
+    miscFunctions.TextBox("Please Choose a Textbox size. Recommended 35-55. Size is measured in the amount of characters. Note: Anything that isn't a number will be treated as a 0.", 20);
+    windowWidth = miscFunctions.StrToInt(Console.ReadLine());
+    if(windowWidth < 15){
+        miscFunctions.TextBox("A size less than 15 may cause runtime issues. Understood? y/n");
+        answer = Console.ReadLine().ToLower();
+        if(answer == "y" || answer == "yes"){
+
+        } else {
+            windowWidth = 35;
+        }
+    }
+    miscFunctions.TextBox("Is this size acceptable? y/n", windowWidth);
+    answer = Console.ReadLine().ToLower();
+    if(answer == "y" || answer == "yes"){
+        ongoing = false;
+    } else {
+        windowWidth = 35;
+    }
+        
+}
 
 Console.WriteLine("RPG adventure of the CMD");
 Console.WriteLine("  Write Start to Begin");
@@ -16,7 +44,6 @@ Console.WriteLine();
 Console.ReadLine();
 //Console.WriteLine("Write Rules to learn how to play");
 
-Console.Clear();
 Console.WriteLine("What is your name Adventurer?");
 Inventory.Characters[0].name = Console.ReadLine();
 Console.WriteLine();

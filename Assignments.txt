@@ -1,0 +1,3 @@
+Mercenary|Goblin Harrasment|The settlement has been having troubles with goblins nearby. Deal with a few for a minor reward.|30|7|10
+/goblin ears are required. 10 extra gold than if you just sold them at full price, so like, 20 more than normal?
+/WhatItIs|Name|Description|Cost|Requirements Type|Requirements Amount|ID

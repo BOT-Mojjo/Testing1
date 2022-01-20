@@ -75,6 +75,14 @@ class misc{
     public int cost;
 }
 
+class assignments{
+    public string type;
+    public string name;
+    public string description;
+    public int rewards;
+    public string[] requirements;
+}
+
 //player
 public class player{
     public string name;
