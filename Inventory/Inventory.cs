@@ -6,7 +6,7 @@ public class Inventory{
     static public int partyCoins = miscFunctions.genRandom.Next(5,15);
     string answer = "";
     bool acted = false;
-    int windowWidth = 35;
+    static public int windowWidth = 35;
     static public List<player> Characters = new List<player>();
     static public List<InventoryLists> InvLists = new List<InventoryLists>();
 
@@ -45,11 +45,7 @@ public class Inventory{
         while (tempCoins.Length < 5){
             tempCoins = tempCoins.Insert(0, "0");
         }
-        miscFunctions.BoxBorder(windowWidth);
-        miscFunctions.BoxLine("--==Inventory==--", windowWidth, "equal");
-        miscFunctions.BoxLine("1:Weapons 2:Armour 3:Potions 4:Miscellaneous 5:Spells", windowWidth, "equal");
-        miscFunctions.BoxLine("Coins:" + tempCoins, windowWidth, "equal");
-        miscFunctions.BoxBorder(windowWidth);
+        miscFunctions.TextBox("(--==Inventory==--) 1:Weapons 2:Armour 3:Potions 4:Miscellaneous 5:Spells Coins:" + tempCoins, windowWidth, "equal");
         // miscFunctions.BoxLine("1:Weapons 2:Armour", windowWidth, "spread");
         // miscFunctions.BoxLine("3:Potions 4:Miscellaneous", windowWidth, "spread");
         // miscFunctions.BoxLine("5:Spells Coins:" + tempCoins, windowWidth, "spread");
@@ -68,13 +64,13 @@ public class Inventory{
             for(int i = 0; i < 2; i++){
                 miscFunctions.BoxLine($"Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i)}", windowWidth);
             }
-            Console.WriteLine("|     -----------------------     |");
-            Console.WriteLine("|       -UnEquiped Weapons-       |");
+            miscFunctions.BoxLine("-----------------------", windowWidth, "equal");
+            miscFunctions.BoxLine("-Unequiped Weapons-", windowWidth, "equal");
             for(int i = 0; i < 5; i++){
                 miscFunctions.BoxLine($"Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i+2)}", windowWidth);
             }
             miscFunctions.BoxBorder(windowWidth);
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine(miscFunctions.PadEqual("Change Weapon? y/n", windowWidth));
             Console.WriteLine();
             answer = Console.ReadLine().ToLower();
@@ -91,27 +87,28 @@ public class Inventory{
                         Console.Clear();
                         int temp = 0;       //Used to know what weapon slot is gonna change
                         miscFunctions.BoxBorder(windowWidth);       // during the change since i'll be 
-                        Console.WriteLine("|       -=Equiped Weapons=-       |");       // overwriting the old one
+                        miscFunctions.BoxLine("-=Equiped Weapons=-", windowWidth, "equal");       // overwriting the old one
                         for(int i = 0; i < 2; i++){
-                            Console.WriteLine($"| Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i)}".PadRight(windowWidth-1)+"|");
+                            miscFunctions.BoxLine($"Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i)}", windowWidth);
                         }
                         miscFunctions.BoxBorder(windowWidth);
                         Console.WriteLine();
-                        Console.WriteLine(miscFunctions.PadEqual("What weapon do you want to change?", windowWidth));
+                        miscFunctions.BoxLine("What weapon do you want to change?", windowWidth, "equal");
                         Console.WriteLine();
                         temp = miscFunctions.StrToInt(Console.ReadLine());               // Input from user, what weapon slot to change
                         if(temp!=1 && temp !=2){                    
                             ongoing1 = miscFunctions.GoBack(windowWidth);
                         }else{
                             miscFunctions.BoxBorder(windowWidth);       //Choosig what weapon to switch to.
-                            Console.WriteLine("|      -=UnEquiped Weapons=-      |");       
+                            miscFunctions.BoxLine("-=UnEquiped Weapons=-", windowWidth, "equal");
                             for(int i = 0; i < 5; i++){
-                                Console.WriteLine($"| Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i+2)}".PadRight(windowWidth-1)+"|");
+                                miscFunctions.BoxLine($"Weapons slot {i+1}: {InvLists[player].FetchWeaponName(i+2)}", windowWidth);
                             }
                             miscFunctions.BoxBorder(windowWidth);
                             Console.WriteLine();
-                            Console.WriteLine("    What weapon do you want to");
-                            Console.WriteLine("            switch to?");
+                            miscFunctions.TextBox("What weapon do you want to switch to?", windowWidth);
+                            // Console.WriteLine("    What weapon do you want to");
+                            // Console.WriteLine("            switch to?");
                             Console.WriteLine();
                             int[] temp2 = new int[3];
                             temp2[1] = miscFunctions.StrToInt(Console.ReadLine());
@@ -146,13 +143,13 @@ public class Inventory{
             while(ongoing==true){
                 Console.Clear();  
                 miscFunctions.BoxBorder(windowWidth);
-                Console.WriteLine("|     --=Armours Inventory=--     |");
+                miscFunctions.BoxLine("--=Armours Inventory=--", windowWidth, "equal");
                 if(true){
-                    Console.WriteLine($"| Equiped Armour: {InvLists[player].FetchArmourName(0)}".PadRight(windowWidth-1)+"|");
-                    Console.WriteLine($"| Spare Armour: {InvLists[player].FetchArmourName(1)}".PadRight(windowWidth-1)+"|");
+                    miscFunctions.BoxLine("Equiped Armour:"+InvLists[player].FetchArmourName(0), windowWidth, "equal");
+                    miscFunctions.BoxLine("Spare Armour: "+InvLists[player].FetchArmourName(1), windowWidth, "equal");
                 }
                 miscFunctions.BoxBorder(windowWidth);
-                Console.WriteLine("        Change Armour? y/n");
+                Console.WriteLine(miscFunctions.PadEqual("Change Armour? y/n", windowWidth));
                 Console.WriteLine();
                 answer=Console.ReadLine().ToLower();
                 if(answer == "y" || answer == "yes"){
@@ -174,14 +171,14 @@ public class Inventory{
         bool ongoing = true;
         while(ongoing == true){
             Console.Clear();
-            miscFunctions.BoxBorder(windowWidth);
-            Console.WriteLine("|        --=Potion Belt=--        |");
-            for(int i = 0; i < 7; i++){
-                Console.WriteLine($"| Potion slot {i+1}: {InvLists[player].FetchPotionName(i)}".PadRight(windowWidth-1)+"|");
-            }
-            miscFunctions.BoxBorder(windowWidth);
-            Console.WriteLine("   'Move' to move potions around");
-            Console.WriteLine("       'Use' to use a potion");
+            // miscFunctions.BoxBorder(windowWidth);
+            // miscFunctions.BoxLine("--=Potion Belt=--", windowWidth, "equal");
+            // for(int i = 0; i < 7; i++){
+            //     Console.WriteLine($"| Potion slot {i+1}: {InvLists[player].FetchPotionName(i)}".PadRight(windowWidth-1)+"|");
+            // }
+            // miscFunctions.BoxBorder(windowWidth);
+            Console.WriteLine(miscFunctions.PadEqual("'Move' to move potions around", windowWidth));
+            Console.WriteLine(miscFunctions.PadEqual("'Use' to use a potion", windowWidth));
             answer=Console.ReadLine().ToLower();
             if(answer == "move"){
                 int[] temp = new int[4];

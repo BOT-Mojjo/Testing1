@@ -1,6 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+// Console.WriteLine("Starting; Loading");  // needed to show frined how this shit is made. Damn facked loading scrrens are funny though.
+// for(int i = 0; i<100; i++){
+//     if(i%10==0){
+//         Console.Write(i+"%");
+//     } else if(i%2==0){
+//         Console.Write(".");
+//     }
+//     System.Threading.Thread.Sleep(200);
+// }
+// Console.WriteLine("Finished!");
+// Console.ReadLine();
+
 Fight.ongoing=false;
 string playerName;
 bool game = true;
@@ -10,17 +22,14 @@ string answer;
 int windowWidth = 35;
 Inventory.InvLists.Add(new InventoryLists());
 Inventory.InvLists[0].inventorySetup();
-// Inv.actionInventory(0);
-// Console.ReadLine();
 FightingStyles.fightingStyleSetup();
-// Shops.actionGuild();
 
 Console.Clear();
 while(ongoing){
-    miscFunctions.TextBox("Please Choose a Textbox size. Recommended 35-55. Size is measured in the amount of characters. Note: Anything that isn't a number will be treated as a 0.", 20);
+    miscFunctions.TextBox("Please Choose a Textbox size. Recommended 35-55. Size is measured in the amount of characters. Note: Anything that isn't a number will be treated as a 0.", 35);
     windowWidth = miscFunctions.StrToInt(Console.ReadLine());
-    if(windowWidth < 15){
-        miscFunctions.TextBox("A size less than 15 may cause runtime issues. Understood? y/n");
+    if(windowWidth < 20){
+        miscFunctions.TextBox("A size less than 20 may cause runtime issues. The game will break, skipping the offending textbox. Understood? y/n");
         answer = Console.ReadLine().ToLower();
         if(answer == "y" || answer == "yes"){
 
@@ -32,11 +41,16 @@ while(ongoing){
     answer = Console.ReadLine().ToLower();
     if(answer == "y" || answer == "yes"){
         ongoing = false;
+        Shops.windowWidth = windowWidth;
+        Inventory.windowWidth = windowWidth;
+        Fight.windowWidth = windowWidth;
     } else {
         windowWidth = 35;
-    }
-        
+    }   
 }
+Inv.actionInventory(0);
+// Console.ReadLine();
+Shops.actionGuild();
 
 Console.WriteLine("RPG adventure of the CMD");
 Console.WriteLine("  Write Start to Begin");

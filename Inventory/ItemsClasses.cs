@@ -81,6 +81,7 @@ class assignments{
     public string description;
     public int rewards;
     public string[] requirements;
+    
 }
 
 //player
